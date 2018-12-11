@@ -1,7 +1,9 @@
 // @flow
 
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+
+import MovieReducer from './reducer/movie.js';
 
 const initialState = {};
 const enhancers = [];
@@ -20,6 +22,12 @@ const composedEnhancers = compose(
   ...enhancers
 );
 
-const store = createStore(initialState, composedEnhancers);
+const store = createStore(
+  combineReducers({
+    movie: MovieReducer,
+  }),
+  initialState,
+  composedEnhancers
+);
 
 export default store;
