@@ -25,7 +25,7 @@ const movieReducer = (
         payload: { results },
       } = action;
 
-      const newMovieState = results.map(
+      const movie = results.map(
         ({ poster_path, release_date, title, vote_average, overview }) => {
           return { poster_path, release_date, title, vote_average, overview };
         }
@@ -33,7 +33,7 @@ const movieReducer = (
 
       return Object.assign({}, state, {
         loading: false,
-        newMovieState,
+        movie,
       });
     case BROWSE_MOVIE_FAIL:
       return Object.assign({}, state, {

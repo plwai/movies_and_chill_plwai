@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import store from './init-store';
-import BrowseButton from './container/browse-button.js';
+import Home from './container/home-container.js';
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
       <Provider store={store}>
         <div className="App">
           <header className="App-header">
-            <BrowseButton />
+            <Home />
           </header>
         </div>
       </Provider>

@@ -6,11 +6,11 @@ import Button from '@material-ui/core/Button';
 
 type Props = {
   children: string,
-  handleClick: Function,
+  onClick: Function,
 };
 
-const NormalButton = ({ children, handleClick }: Props) => (
-  <Button variant="contained" color="primary" onClick={handleClick}>
+const NormalButton = ({ children, onClick }: Props) => (
+  <Button variant="contained" color="primary" onClick={onClick}>
     {children}
   </Button>
 );

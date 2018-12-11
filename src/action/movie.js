@@ -12,12 +12,9 @@ const browseMovieFail = createAction(BROWSE_MOVIE_FAIL);
 const browseMovieSuccess = createAction(BROWSE_MOVIE_SUCCESS);
 
 // Async action to fetch movie data
-export const browsePopularMovie = () => async (dispatch: Function) => {
+const browseMovie = (uri: string) => async (dispatch: Function) => {
   // Loading indicator
   dispatch(browseMovieRequest());
-
-  // Fetch movie data
-  const uri = '/movie/popular';
 
   try {
     const browseResult = await http.GET(uri);
@@ -26,4 +23,23 @@ export const browsePopularMovie = () => async (dispatch: Function) => {
   } catch (err) {
     dispatch(browseMovieFail(err));
   }
+};
+
+// Browse popular movie action
+export const browsePopularMovie = () => (dispatch: Function) => {
+  // Fetch movie data
+  const uri = '/movie/popular';
+
+  dispatch(browseMovie(uri));
+};
+
+// Browse trending movie action
+export const browseTrendingMovie = (
+  mediaType: string = 'all',
+  timeWindow: string = 'day'
+) => (dispatch: Function) => {
+  // Fetch movie data
+  const uri = `/trending/${mediaType}/${timeWindow}`;
+
+  dispatch(browseMovie(uri));
 };
