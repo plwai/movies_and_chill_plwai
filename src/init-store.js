@@ -3,7 +3,8 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
-import MovieReducer from './reducer/movie.js';
+import MovieReducer from './reducer/movie';
+import PersonReducer from './reducer/person';
 
 const initialState = {};
 const enhancers = [];
@@ -25,6 +26,7 @@ const composedEnhancers = compose(
 const store = createStore(
   combineReducers({
     movie: MovieReducer,
+    person: PersonReducer,
   }),
   initialState,
   composedEnhancers

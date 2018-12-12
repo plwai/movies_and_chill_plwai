@@ -7,15 +7,14 @@ type Props = {
   id: string,
   label: string,
   placeholder: string,
-  handleChange: Function,
-  handleKey: Function,
+  onChange: Function,
+  onKeyDown: Function,
 };
 
 const NormalTextField = ({
   id,
   label,
   placeholder,
-  value,
   onChange,
   onKeyDown,
 }: Props) => (
