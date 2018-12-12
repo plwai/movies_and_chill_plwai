@@ -17,12 +17,14 @@ export const getMovieDetails = (id: number) => async (dispatch: Function) => {
   // Loading indicator for profile view
   dispatch(requestProfileStarted());
 
-  const uri = `/movie/${id}`;
+  const movieDetailUri = `/movie/${id}`;
+  const creditsUri = `/movie/${id}/credits`;
 
   try {
-    const browseResult = await http.GET(uri);
+    const browseResult = await http.GET(movieDetailUri);
+    const creditResult = await http.GET(creditsUri);
 
-    dispatch(browseDetailRequestSuccess(browseResult));
+    dispatch(browseDetailRequestSuccess({ browseResult, creditResult }));
   } catch (err) {
     dispatch(requestProfileFail(err));
   }

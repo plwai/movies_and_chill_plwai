@@ -9,6 +9,7 @@ import {
 const initialState = {
   loading: false,
   movieDetail: {},
+  cast: [],
 };
 
 const movieReducer = (
@@ -24,11 +25,14 @@ const movieReducer = (
     case BROWSE_DETAIL_REQUEST_SUCCESS: {
       const {
         payload: {
-          title,
-          overview,
-          runtime,
-          release_date,
-          production_companies,
+          browseResult: {
+            title,
+            overview,
+            runtime,
+            release_date,
+            production_companies,
+          },
+          creditResult: { cast },
         },
       } = action;
 
@@ -43,6 +47,7 @@ const movieReducer = (
       return Object.assign({}, state, {
         loading: false,
         movieDetail,
+        cast,
       });
     }
 
