@@ -9,9 +9,11 @@ type Props = {
   popularChildren: string,
   trendingChildren: string,
   searchChildren: string,
+  movieProfileChildren: string,
   handlePopular: Function,
   handleTrending: Function,
   handleSearch: Function,
+  handleMovieProfile: Function,
 };
 
 class Home extends Component {
@@ -60,6 +62,8 @@ class Home extends Component {
       trendingChildren,
       handleTrending,
       searchChildren,
+      movieProfileChildren,
+      handleMovieProfile,
     }: Props = this.props;
 
     return (
@@ -73,6 +77,9 @@ class Home extends Component {
           onChange={this.handleSearchChange}
           onKeyDown={this.handleSearchEnter}
         />
+        <NormalButton onClick={() => handleMovieProfile(550)}>
+          {movieProfileChildren}
+        </NormalButton>
       </div>
     );
   }

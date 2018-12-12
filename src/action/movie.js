@@ -3,13 +3,15 @@
 import { createAction } from 'redux-actions';
 import http from '../utils/http';
 
-export const BROWSE_MOVIE_REQUEST = 'BROWSE_MOVIE_REQUEST';
-export const BROWSE_MOVIE_FAIL = 'BROWSE_MOVIE_FAIL';
-export const BROWSE_MOVIE_SUCCESS = 'BROWSE_MOVIE_SUCCESS';
+export const REQUEST_STARTED = 'REQUEST_STARTED';
+export const REQUEST_FAIL = 'REQUEST_FAIL';
+export const BROWSE_REQUEST_SUCCESS = 'BROWSE_REQUEST_SUCCESS';
+export const BROWSE_DETAIL_REQUEST_SUCCESS = 'BROWSE_DETAIL_REQUEST_SUCCESS';
 
-const browseMovieRequest = createAction(BROWSE_MOVIE_REQUEST);
-const browseMovieFail = createAction(BROWSE_MOVIE_FAIL);
-const browseMovieSuccess = createAction(BROWSE_MOVIE_SUCCESS);
+const requestStarted = createAction(REQUEST_STARTED);
+const requestFail = createAction(REQUEST_FAIL);
+const browseRequestSuccess = createAction(BROWSE_REQUEST_SUCCESS);
+const browseDetailRequestSuccess = createAction(BROWSE_DETAIL_REQUEST_SUCCESS);
 
 type SearchQueriesType = {
   page: number,
@@ -25,14 +27,14 @@ const browseMovie = (uri: string, query: JSON = {}) => async (
   dispatch: Function
 ) => {
   // Loading indicator
-  dispatch(browseMovieRequest());
+  dispatch(requestStarted());
 
   try {
     const browseResult = await http.GET(uri, query);
 
-    dispatch(browseMovieSuccess(browseResult));
+    dispatch(browseRequestSuccess(browseResult));
   } catch (err) {
-    dispatch(browseMovieFail(err));
+    dispatch(requestFail(err));
   }
 };
 
@@ -80,4 +82,20 @@ export const searchMovies = (
   };
 
   dispatch(browseMovie(uri, queries));
+};
+
+// Async function to get movie details based on movie id
+export const getMovieDetails = (id: number) => async (dispatch: Function) => {
+  // Loading indicator for profile view
+  dispatch(requestStarted());
+
+  const uri = `/movie/${id}`;
+
+  try {
+    const browseResult = await http.GET(uri);
+
+    dispatch(browseDetailRequestSuccess(browseResult));
+  } catch (err) {
+    dispatch(requestFail(err));
+  }
 };
