@@ -6,8 +6,9 @@ import {
   browsePopularMovie,
   browseTrendingMovie,
   searchMovies,
-  getMovieDetails,
 } from '../action/movie';
+
+import { getMovieDetails } from '../action/movie-profile';
 
 import { getCastDetails } from '../action/person';
 

@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 import MovieReducer from './reducer/movie';
+import MovieProfile from './reducer/movie-profile';
 import PersonReducer from './reducer/person';
 
 const initialState = {};
@@ -27,6 +28,7 @@ const store = createStore(
   combineReducers({
     movie: MovieReducer,
     person: PersonReducer,
+    movieProfile: MovieProfile,
   }),
   initialState,
   composedEnhancers

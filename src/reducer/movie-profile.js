@@ -1,14 +1,13 @@
 // @flow
 
 import {
-  REQUEST_STARTED,
-  REQUEST_FAIL,
-  BROWSE_REQUEST_SUCCESS,
-} from '../action/movie';
+  REQUEST_PROFILE_STARTED,
+  REQUEST_PROFILE_FAIL,
+  BROWSE_DETAIL_REQUEST_SUCCESS,
+} from '../action/movie-profile';
 
 const initialState = {
   loading: false,
-  movie: [],
   movieDetail: {},
 };
 
@@ -17,29 +16,37 @@ const movieReducer = (
   action: { type: string, payload: any }
 ) => {
   switch (action.type) {
-    case REQUEST_STARTED:
+    case REQUEST_PROFILE_STARTED:
       return Object.assign({}, state, {
         loading: true,
       });
 
-    case BROWSE_REQUEST_SUCCESS: {
+    case BROWSE_DETAIL_REQUEST_SUCCESS: {
       const {
-        payload: { results },
+        payload: {
+          title,
+          overview,
+          runtime,
+          release_date,
+          production_companies,
+        },
       } = action;
 
-      const movie = results.map(
-        ({ poster_path, release_date, title, vote_average, overview }) => {
-          return { poster_path, release_date, title, vote_average, overview };
-        }
-      );
+      const movieDetail = {
+        title,
+        overview,
+        runtime,
+        release_date,
+        production_companies,
+      };
 
       return Object.assign({}, state, {
         loading: false,
-        movie,
+        movieDetail,
       });
     }
 
-    case REQUEST_FAIL: {
+    case REQUEST_PROFILE_FAIL: {
       return Object.assign({}, state, {
         loading: false,
       });
