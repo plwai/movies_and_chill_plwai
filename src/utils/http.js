@@ -9,7 +9,9 @@ function formatUri(uri, query) {
   let queryStr = `?api_key=${config.MOVIE_DB_API_KEY}`;
 
   Object.keys(query).forEach(function(key) {
-    queryStr += `&${key}=${data[key]}`;
+    if (query[key] !== undefined) {
+      queryStr += `&${key}=${query[key]}`;
+    }
   });
 
   if (new RegExp('^http|https').test(url)) {

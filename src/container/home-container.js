@@ -2,12 +2,18 @@
 
 import { connect } from 'react-redux';
 
-import { browsePopularMovie, browseTrendingMovie } from '../action/movie';
+import {
+  browsePopularMovie,
+  browseTrendingMovie,
+  searchMovies,
+} from '../action/movie';
+
 import Home from '../component/page/home';
 
 const mapStateToProps = () => ({
   popularChildren: 'Browse Popular',
   trendingChildren: 'Browse Trending',
+  searchChildren: 'Search Movie',
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -16,6 +22,9 @@ const mapDispatchToProps = dispatch => ({
   },
   handleTrendingClick: () => {
     dispatch(browseTrendingMovie());
+  },
+  handleSearchClick: () => {
+    dispatch(searchMovies(''));
   },
 });
 

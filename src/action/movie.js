@@ -11,13 +11,24 @@ const browseMovieRequest = createAction(BROWSE_MOVIE_REQUEST);
 const browseMovieFail = createAction(BROWSE_MOVIE_FAIL);
 const browseMovieSuccess = createAction(BROWSE_MOVIE_SUCCESS);
 
+type SearchQueriesType = {
+  page: number,
+  language: string,
+  includeAdult: boolean,
+  region: string,
+  year: number,
+  primaryReleaseYear: number,
+};
+
 // Async action to fetch movie data
-const browseMovie = (uri: string) => async (dispatch: Function) => {
+const browseMovie = (uri: string, query: JSON = {}) => async (
+  dispatch: Function
+) => {
   // Loading indicator
   dispatch(browseMovieRequest());
 
   try {
-    const browseResult = await http.GET(uri);
+    const browseResult = await http.GET(uri, query);
 
     dispatch(browseMovieSuccess(browseResult));
   } catch (err) {
@@ -42,4 +53,31 @@ export const browseTrendingMovie = (
   const uri = `/trending/${mediaType}/${timeWindow}`;
 
   dispatch(browseMovie(uri));
+};
+
+// Search movie based on queries
+export const searchMovies = (
+  query: string,
+  {
+    page,
+    language,
+    includeAdult,
+    region,
+    year,
+    primaryReleaseYear,
+  }: SearchQueriesType = {}
+) => (dispatch: Function) => {
+  const uri = `/search/movie`;
+
+  const queries = {
+    query,
+    page,
+    language,
+    includeAdult,
+    region,
+    year,
+    primaryReleaseYear,
+  };
+
+  dispatch(browseMovie(uri, queries));
 };
