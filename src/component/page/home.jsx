@@ -18,14 +18,17 @@ type Props = {
 };
 
 class Home extends Component<Props> {
-  constructor(props) {
+  constructor(props: Props) {
     super();
 
     this.timer = null;
     this.timeout = 1000;
   }
 
-  handleSearchChange = ({ target: { value } }) => {
+  timer: any;
+  timeout: number;
+
+  handleSearchChange = ({ target: { value } }: any) => {
     clearTimeout(this.timer);
 
     // Stop if empty
@@ -40,7 +43,7 @@ class Home extends Component<Props> {
     }, this.timeout);
   };
 
-  handleSearchEnter = ({ keyCode, target: { value } }) => {
+  handleSearchEnter = ({ keyCode, target: { value } }: any) => {
     // Stop if empty
     if (value === '') {
       return;

@@ -21,7 +21,7 @@ type SearchQueriesType = {
 };
 
 // Async action to fetch movie data
-const browseMovie = (uri: string, query: JSON = {}) => async (
+const browseMovie = (uri: string, query: Object = {}) => async (
   dispatch: Function
 ) => {
   // Loading indicator
