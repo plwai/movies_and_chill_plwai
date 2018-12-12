@@ -15,11 +15,13 @@ const initialState = {
   popular: {
     movie: [],
     loading: false,
+    page: 1,
     error: '',
   },
   search: {
     movie: [],
     loading: false,
+    page: 1,
     error: '',
   },
 };
@@ -38,6 +40,8 @@ const movieReducer = (
       newStates[mode] = {
         loading: true,
         error: '',
+        movie: [...state[mode].movie],
+        page: state[mode].page,
       };
 
       return Object.assign({}, state, newStates);
@@ -45,12 +49,12 @@ const movieReducer = (
     case BROWSE_REQUEST_SUCCESS: {
       const {
         payload: {
-          browseResult: { results },
+          browseResult: { results, page },
           mode,
         },
       } = action;
 
-      const movie = results.map(
+      const newMovie = results.map(
         ({
           id,
           poster_path,
@@ -76,10 +80,13 @@ const movieReducer = (
         }
       );
 
+      const movie = [...state[mode].movie, ...newMovie];
+
       const newStates = {};
       newStates[mode] = {
         loading: false,
         movie,
+        page,
       };
 
       return Object.assign({}, state, newStates);
@@ -94,6 +101,8 @@ const movieReducer = (
       newStates[mode] = {
         loading: false,
         error: err.message,
+        movie: [...state[mode].movie],
+        page: state[mode].page,
       };
 
       return Object.assign({}, state, newStates);

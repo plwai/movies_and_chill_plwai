@@ -41,11 +41,13 @@ const browseMovie = (
 };
 
 // Browse popular movie action
-export const browsePopularMovie = () => (dispatch: Function) => {
+export const browsePopularMovie = (query: Object = {}) => (
+  dispatch: Function
+) => {
   // Fetch movie data
   const uri = '/movie/popular';
 
-  dispatch(browseMovie('popular', uri));
+  dispatch(browseMovie('popular', uri, query));
 };
 
 // Browse trending movie action

@@ -6,7 +6,6 @@ import { StyledNavContainer, StyledNavLinkContainer } from './styles/nav-style';
 
 import {
   HOME_PAGE_ROUTE,
-  TRENDING_PAGE_ROUTE,
   POPULAR_PAGE_ROUTE,
   PEOPLE_PAGE_ROUTE,
 } from '../routes';
@@ -16,7 +15,6 @@ const Nav = () => (
     <StyledNavContainer>
       {[
         { route: HOME_PAGE_ROUTE, label: 'Home' },
-        { route: TRENDING_PAGE_ROUTE, label: 'Trending' },
         { route: POPULAR_PAGE_ROUTE, label: 'Popular' },
         { route: PEOPLE_PAGE_ROUTE, label: 'People' },
       ].map(link => (

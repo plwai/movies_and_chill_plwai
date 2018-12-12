@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 
 import { browsePopularMovie, browseTrendingMovie } from '../action/movie';
 
-import Home from '../component/page/home';
+import MovieListPage from '../component/page/movie-list';
 
 const mapStateToProps = state => ({
-  trendingMovie: state.movie.trending,
+  movie: state.movie.popular,
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
-  fetchTrending: () => {
-    dispatch(browseTrendingMovie());
+  fetchMovie: (query: Object = {}) => {
+    dispatch(browsePopularMovie(query));
   },
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(MovieListPage);
