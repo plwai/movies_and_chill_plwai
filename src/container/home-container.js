@@ -16,15 +16,15 @@ const mapStateToProps = () => ({
   searchChildren: 'Search Movie',
 });
 
-const mapDispatchToProps = dispatch => ({
-  handlePopularClick: () => {
+const mapDispatchToProps = (dispatch: Function) => ({
+  handlePopular: () => {
     dispatch(browsePopularMovie());
   },
-  handleTrendingClick: () => {
+  handleTrending: () => {
     dispatch(browseTrendingMovie());
   },
-  handleSearchClick: () => {
-    dispatch(searchMovies(''));
+  handleSearch: query => {
+    dispatch(searchMovies(query));
   },
 });
 
