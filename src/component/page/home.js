@@ -8,15 +8,16 @@ import NormalTextField from '../normal-textfield';
 type Props = {
   popularChildren: string,
   trendingChildren: string,
-  searchChildren: string,
   movieProfileChildren: string,
+  personProfileChildren: string,
   handlePopular: Function,
   handleTrending: Function,
   handleSearch: Function,
   handleMovieProfile: Function,
+  hanldePersonProfile: Function,
 };
 
-class Home extends Component {
+class Home extends Component<Props> {
   constructor(props) {
     super();
 
@@ -61,10 +62,11 @@ class Home extends Component {
       handlePopular,
       trendingChildren,
       handleTrending,
-      searchChildren,
       movieProfileChildren,
       handleMovieProfile,
-    }: Props = this.props;
+      personProfileChildren,
+      hanldePersonProfile,
+    } = this.props;
 
     return (
       <div>
@@ -79,6 +81,9 @@ class Home extends Component {
         />
         <NormalButton onClick={() => handleMovieProfile(550)}>
           {movieProfileChildren}
+        </NormalButton>
+        <NormalButton onClick={() => hanldePersonProfile(287)}>
+          {personProfileChildren}
         </NormalButton>
       </div>
     );

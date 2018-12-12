@@ -9,6 +9,8 @@ import {
   getMovieDetails,
 } from '../action/movie';
 
+import { getCastDetails } from '../action/person';
+
 import Home from '../component/page/home';
 
 const mapStateToProps = () => ({
@@ -16,6 +18,7 @@ const mapStateToProps = () => ({
   trendingChildren: 'Browse Trending',
   searchChildren: 'Search Movie',
   movieProfileChildren: 'Get Movie 550',
+  personProfileChildren: 'Get Person 287',
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
@@ -30,6 +33,9 @@ const mapDispatchToProps = (dispatch: Function) => ({
   },
   handleMovieProfile: id => {
     dispatch(getMovieDetails(id));
+  },
+  hanldePersonProfile: id => {
+    dispatch(getCastDetails(id));
   },
 });
 

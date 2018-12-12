@@ -23,7 +23,7 @@ const movieReducer = (
         loading: true,
       });
 
-    case BROWSE_REQUEST_SUCCESS:
+    case BROWSE_REQUEST_SUCCESS: {
       const {
         payload: { results },
       } = action;
@@ -38,8 +38,9 @@ const movieReducer = (
         loading: false,
         movie,
       });
+    }
 
-    case BROWSE_DETAIL_REQUEST_SUCCESS:
+    case BROWSE_DETAIL_REQUEST_SUCCESS: {
       const {
         payload: {
           title,
@@ -62,11 +63,13 @@ const movieReducer = (
         loading: false,
         movieDetail,
       });
+    }
 
-    case REQUEST_FAIL:
+    case REQUEST_FAIL: {
       return Object.assign({}, state, {
         loading: false,
       });
+    }
 
     default:
       return state;

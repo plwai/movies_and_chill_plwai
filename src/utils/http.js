@@ -36,7 +36,7 @@ const isJSON = input =>
 
 const fetching = (uriInput = '', method = 'GET', body = {}, query = {}) => {
   const uri = formatUri(uriInput, query);
-  console.log('Fetch uri : ', method, uri);
+
   // const jwtToken = authStore.getJwtToken();
   const jsonBody = JSON.stringify(body);
   const customHeaders = {};
@@ -49,8 +49,7 @@ const fetching = (uriInput = '', method = 'GET', body = {}, query = {}) => {
   if (method === 'GET') {
     delete data.body;
   }
-  console.log('Fetch header : ', headers);
-  console.log('Fetch body : ', body, jsonBody);
+
   const fetchAPI = fetch(uri, data)
     .then(resp => {
       if (!resp.ok) {
@@ -64,12 +63,10 @@ const fetching = (uriInput = '', method = 'GET', body = {}, query = {}) => {
       }
       return resp.text().then(text => {
         const json = isJSON(text) ? JSON.parse(text) : {};
-        console.log('JSON response: ', json);
         return Promise.resolve(json);
       });
     })
     .catch(err => {
-      console.warn(`API Error ${err.statusCode} ${err.message}`);
       return Promise.reject(err);
     });
   return Promise.race([
