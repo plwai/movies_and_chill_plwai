@@ -20,19 +20,23 @@ type SearchQueriesType = {
   primaryReleaseYear: number,
 };
 
+type BrowseType = 'search' | 'trending' | 'popular';
+
 // Async action to fetch movie data
-const browseMovie = (uri: string, query: Object = {}) => async (
-  dispatch: Function
-) => {
+const browseMovie = (
+  mode: BrowseType,
+  uri: string,
+  query: Object = {}
+) => async (dispatch: Function) => {
   // Loading indicator
-  dispatch(requestStarted());
+  dispatch(requestStarted({ mode }));
 
   try {
     const browseResult = await http.GET(uri, query);
 
-    dispatch(browseRequestSuccess(browseResult));
+    dispatch(browseRequestSuccess({ browseResult, mode }));
   } catch (err) {
-    dispatch(requestFail(err));
+    dispatch(requestFail({ err, mode }));
   }
 };
 
@@ -41,7 +45,7 @@ export const browsePopularMovie = () => (dispatch: Function) => {
   // Fetch movie data
   const uri = '/movie/popular';
 
-  dispatch(browseMovie(uri));
+  dispatch(browseMovie('popular', uri));
 };
 
 // Browse trending movie action
@@ -52,7 +56,7 @@ export const browseTrendingMovie = (
   // Fetch movie data
   const uri = `/trending/${mediaType}/${timeWindow}`;
 
-  dispatch(browseMovie(uri));
+  dispatch(browseMovie('trending', uri));
 };
 
 // Search movie based on queries
@@ -79,5 +83,5 @@ export const searchMovies = (
     primaryReleaseYear,
   };
 
-  dispatch(browseMovie(uri, queries));
+  dispatch(browseMovie('search', uri, queries));
 };

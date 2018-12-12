@@ -12,6 +12,10 @@ import { HOME_PAGE_ROUTE } from './routes';
 
 const AppContainer = styled.div``;
 
+const BodyContainer = styled.div`
+  margin-top: 100px;
+`;
+
 class App extends Component {
   render() {
     return (
@@ -19,9 +23,11 @@ class App extends Component {
         <BrowserRouter>
           <AppContainer>
             <Header />
-            <Switch>
-              <Route exact path={HOME_PAGE_ROUTE} render={() => <Home />} />
-            </Switch>
+            <BodyContainer>
+              <Switch>
+                <Route exact path={HOME_PAGE_ROUTE} render={() => <Home />} />
+              </Switch>
+            </BodyContainer>
           </AppContainer>
         </BrowserRouter>
       </Provider>

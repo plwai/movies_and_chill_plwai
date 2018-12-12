@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { StyledNavLink } from './styles/nav-link';
-import styled from '@emotion/styled';
+import { StyledNavContainer, StyledNavLinkContainer } from './styles/nav-style';
 
 import {
   HOME_PAGE_ROUTE,
@@ -10,15 +10,6 @@ import {
   POPULAR_PAGE_ROUTE,
   PEOPLE_PAGE_ROUTE,
 } from '../routes';
-
-const StyledNavContainer = styled.div`
-  display: flow;
-`;
-
-const StyledNavLinkContainer = styled.div`
-  padding-left: 5px;
-  padding-right: 5px;
-`;
 
 const Nav = () => (
   <nav>

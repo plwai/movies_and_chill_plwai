@@ -1,94 +1,113 @@
 // @flow
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import NormalButton from '../normal-button';
-import NormalTextField from '../normal-textfield';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
-type Props = {
-  popularChildren: string,
-  trendingChildren: string,
-  movieProfileChildren: string,
-  personProfileChildren: string,
-  handlePopular: Function,
-  handleTrending: Function,
-  handleSearch: Function,
-  handleMovieProfile: Function,
-  hanldePersonProfile: Function,
+import { StyledPageSubTitle } from '../styles/page-title';
+import {
+  HomeContainer,
+  HomeMovieContainer,
+  StyledHomeCard,
+  StyledHomeCardMedia,
+  StyledHomeCardActionArea,
+} from '../styles/home-style';
+
+import { TRENDING_PAGE_ROUTE, POPULAR_PAGE_ROUTE } from '../../routes';
+
+type MovieStates = {
+  loading: Boolean,
+  movie: Array<any>,
+  error: string,
 };
 
-class Home extends Component<Props> {
-  constructor(props: Props) {
-    super();
+type Props = {
+  fetchPopular: Function,
+  fetchTrending: Function,
 
-    this.timer = null;
-    this.timeout = 1000;
+  trendingMovie: MovieStates,
+  popularMovie: MovieStates,
+};
+
+const HomeCard = ({ img, title }: any) => (
+  <StyledHomeCard>
+    <StyledHomeCardActionArea>
+      <StyledHomeCardMedia
+        image={`http://image.tmdb.org/t/p/w185${img}`}
+        title={title}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h4">
+          {title}
+        </Typography>
+      </CardContent>
+    </StyledHomeCardActionArea>
+  </StyledHomeCard>
+);
+
+const HomeBrowseMoreCard = withRouter(({ history, path }) => (
+  <StyledHomeCard>
+    <StyledHomeCardActionArea onClick={() => history.push(path)}>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h4">
+          Browse More
+        </Typography>
+      </CardContent>
+    </StyledHomeCardActionArea>
+  </StyledHomeCard>
+));
+
+class Home extends Component<Props> {
+  componentDidMount() {
+    const { fetchPopular, fetchTrending } = this.props;
+
+    fetchPopular();
+    fetchTrending();
   }
 
-  timer: any;
-  timeout: number;
+  renderMovies(movies: any) {
+    const { movie } = movies;
 
-  handleSearchChange = ({ target: { value } }: any) => {
-    clearTimeout(this.timer);
-
-    // Stop if empty
-    if (value === '') {
+    if (movie === undefined) {
       return;
     }
 
-    this.timer = setTimeout(() => {
-      const { handleSearch } = this.props;
+    const renderResult = movies.movie.map(
+      ({ id, poster_path, release_date, title, vote_average, overview }) => (
+        <HomeCard key={id} img={poster_path} title={title} />
+      )
+    );
 
-      handleSearch(value);
-    }, this.timeout);
-  };
-
-  handleSearchEnter = ({ keyCode, target: { value } }: any) => {
-    // Stop if empty
-    if (value === '') {
-      return;
-    }
-
-    // ENTER
-    if (keyCode === 13) {
-      clearTimeout(this.timer);
-
-      const { handleSearch } = this.props;
-
-      handleSearch(value);
-    }
-  };
+    return renderResult;
+  }
 
   render() {
-    const {
-      popularChildren,
-      handlePopular,
-      trendingChildren,
-      handleTrending,
-      movieProfileChildren,
-      handleMovieProfile,
-      personProfileChildren,
-      hanldePersonProfile,
-    } = this.props;
+    const { trendingMovie, popularMovie } = this.props;
 
     return (
-      <div>
-        <NormalButton onClick={handlePopular}>{popularChildren}</NormalButton>
-        <NormalButton onClick={handleTrending}>{trendingChildren}</NormalButton>
-        <NormalTextField
-          id="Search Field"
-          label="Search Movie"
-          placeholder="Type the keywords"
-          onChange={this.handleSearchChange}
-          onKeyDown={this.handleSearchEnter}
-        />
-        <NormalButton onClick={() => handleMovieProfile(550)}>
-          {movieProfileChildren}
-        </NormalButton>
-        <NormalButton onClick={() => hanldePersonProfile(287)}>
-          {personProfileChildren}
-        </NormalButton>
-      </div>
+      <HomeContainer>
+        <StyledPageSubTitle>Trending</StyledPageSubTitle>
+        {trendingMovie.loading && <CircularProgress />}
+        <HomeMovieContainer>
+          {trendingMovie.error !== '' && trendingMovie.error}
+          {this.renderMovies(trendingMovie)}
+          {trendingMovie.movie !== undefined && (
+            <HomeBrowseMoreCard path={TRENDING_PAGE_ROUTE} />
+          )}
+        </HomeMovieContainer>
+        <StyledPageSubTitle>Popular</StyledPageSubTitle>
+        {popularMovie.loading && <CircularProgress />}
+        <HomeMovieContainer>
+          {popularMovie.error !== '' && popularMovie.error}
+          {this.renderMovies(popularMovie)}
+          {trendingMovie.movie !== undefined && (
+            <HomeBrowseMoreCard path={POPULAR_PAGE_ROUTE} />
+          )}
+        </HomeMovieContainer>
+      </HomeContainer>
     );
   }
 }

@@ -1,34 +1,22 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import styled from '@emotion/styled';
 
 import { NoStyleNavLink } from './styles/nav-link';
 import SearchBar from './searchbar';
 import Nav from './nav';
 import { HOME_PAGE_ROUTE } from '../routes';
-
-const StyledToolbar = styled(Toolbar)`
-  justify-content: space-between;
-`;
-
-const MenuContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NavContainer = styled.div`
-  margin-left: 25px;
-`;
-
-const Title = styled.h1``;
+import {
+  StyledToolbar,
+  MenuContainer,
+  NavContainer,
+} from './styles/header-style';
 
 const Header = () => (
-  <AppBar position="static">
+  <AppBar position="fixed">
     <StyledToolbar>
       <MenuContainer>
         <NoStyleNavLink to={HOME_PAGE_ROUTE} exact>
-          <Title>Movies and Chill</Title>
+          <h1>Movies and Chill</h1>
         </NoStyleNavLink>
         <NavContainer>
           <Nav />
