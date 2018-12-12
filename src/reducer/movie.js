@@ -4,7 +4,6 @@ import {
   REQUEST_STARTED,
   REQUEST_FAIL,
   BROWSE_REQUEST_SUCCESS,
-  BROWSE_DETAIL_REQUEST_SUCCESS,
 } from '../action/movie';
 
 const initialState = {
@@ -37,31 +36,6 @@ const movieReducer = (
       return Object.assign({}, state, {
         loading: false,
         movie,
-      });
-    }
-
-    case BROWSE_DETAIL_REQUEST_SUCCESS: {
-      const {
-        payload: {
-          title,
-          overview,
-          runtime,
-          release_date,
-          production_companies,
-        },
-      } = action;
-
-      const movieDetail = {
-        title,
-        overview,
-        runtime,
-        release_date,
-        production_companies,
-      };
-
-      return Object.assign({}, state, {
-        loading: false,
-        movieDetail,
       });
     }
 
