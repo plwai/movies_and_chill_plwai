@@ -1,0 +1,24 @@
+import { NavLink } from 'react-router-dom';
+import styled from '@emotion/styled';
+
+export const NoStyleNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: white;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
+
+export const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+`;
