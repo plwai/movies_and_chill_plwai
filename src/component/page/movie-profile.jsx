@@ -51,6 +51,7 @@ class MovieProfilePage extends Component<Props> {
     fetchMovieDetail(this.movieId);
   }
 
+  // Redirect to person profile
   handleCardClick(id) {
     const { history } = this.props;
 

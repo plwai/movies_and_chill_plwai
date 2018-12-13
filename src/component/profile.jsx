@@ -20,6 +20,7 @@ import {
   DetailShortInfo,
   StyledIFrame,
   NoMarginTypography,
+  StyledWarningIcon,
 } from './styles/profile-style';
 
 const Profile = ({
@@ -42,8 +43,10 @@ const Profile = ({
 
   let filteredCast = [];
 
-  // Limit 6 cast
-  for (let i = 0; i < 6; i++) {
+  // Limit MAX 6 cast
+  const MAX_CREDIT = credit.length > 6 ? 6 : credit.length;
+
+  for (let i = 0; i < MAX_CREDIT; i++) {
     filteredCast.push(credit[i]);
   }
 
@@ -53,11 +56,18 @@ const Profile = ({
   return (
     <StyledPaper elevation={1}>
       <DetailContainer>
-        <img
-          src={`http://image.tmdb.org/t/p/w300${poster_path}`}
-          alt="poster"
-          height="450"
-        />
+        {poster_path === null ? (
+          <center>
+            <StyledWarningIcon />
+          </center>
+        ) : (
+          <img
+            src={`http://image.tmdb.org/t/p/w300${poster_path}`}
+            alt="poster"
+            height="450"
+          />
+        )}
+
         <DetailInfoContainer>
           <StyledPaperSubTitle>{`${title}`}</StyledPaperSubTitle>
           {date !== undefined && (

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Switch } from 'react-router';
+import { Helmet } from 'react-helmet';
 import styled from '@emotion/styled';
 
 import store from './init-store';
@@ -36,6 +37,10 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <AppContainer>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>Movies and Chill</title>
+            </Helmet>
             <Header />
             <BodyContainer>
               <Switch>

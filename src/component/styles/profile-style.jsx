@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import WarningIcon from '@material-ui/icons/Warning';
 
 export const StyledPaper = styled(Paper)`
   display: flex;
@@ -16,6 +17,11 @@ export const StyledPaper = styled(Paper)`
 export const NoMarginTypography = styled(Typography)`
   margin: 0px;
   margin-left: 10px;
+`;
+
+export const StyledWarningIcon = styled(WarningIcon)`
+  height: 300px;
+  width: 250px;
 `;
 
 export const DetailContainer = styled.div`

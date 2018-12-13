@@ -60,6 +60,7 @@ class MovieListPage extends Component<Props> {
     }
   };
 
+  // Redirect to person profile
   handleCardClick(id: number) {
     const { history } = this.props;
 
