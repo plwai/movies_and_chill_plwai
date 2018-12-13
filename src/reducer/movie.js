@@ -54,6 +54,7 @@ const movieReducer = (
         },
       } = action;
 
+      // Filter new movie states
       const newMovie = results.map(
         ({
           id,
@@ -80,6 +81,7 @@ const movieReducer = (
         }
       );
 
+      // Concat old state with new state
       const movie = [...state[mode].movie, ...newMovie];
 
       const newStates = {};

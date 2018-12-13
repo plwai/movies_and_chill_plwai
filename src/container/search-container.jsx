@@ -2,21 +2,21 @@
 
 import { connect } from 'react-redux';
 
-import { browsePopularMovie } from '../action/movie';
+import { searchMovies } from '../action/movie';
 
-import MovieListPage from '../component/page/movie-list';
+import MovieDetailedListPage from '../component/page/movie-detailed-list';
 
 const mapStateToProps = state => ({
-  movie: state.movie.popular,
+  movie: state.movie.search,
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
   fetchMovie: (query: Object = {}) => {
-    dispatch(browsePopularMovie(query));
+    dispatch(searchMovies(query));
   },
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MovieListPage);
+)(MovieDetailedListPage);

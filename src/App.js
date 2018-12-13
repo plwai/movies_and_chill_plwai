@@ -5,11 +5,17 @@ import { Switch } from 'react-router';
 import styled from '@emotion/styled';
 
 import store from './init-store';
+
+import Header from './component/header';
 import Home from './container/home-container';
 import PopularPage from './container/popular-container';
-import Header from './component/header';
+import SearchPage from './container/search-container';
 
-import { HOME_PAGE_ROUTE, POPULAR_PAGE_ROUTE } from './routes';
+import {
+  HOME_PAGE_ROUTE,
+  POPULAR_PAGE_ROUTE,
+  SEARCH_PAGE_ROUTE,
+} from './routes';
 
 const AppContainer = styled.div``;
 
@@ -32,6 +38,11 @@ class App extends Component {
                   exact
                   path={POPULAR_PAGE_ROUTE}
                   render={() => <PopularPage />}
+                />
+                <Route
+                  exact
+                  path={SEARCH_PAGE_ROUTE}
+                  render={() => <SearchPage />}
                 />
               </Switch>
             </BodyContainer>

@@ -1,7 +1,12 @@
+// @flow
+
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import styled from '@emotion/styled';
+
+import { SEARCH_PAGE_ROUTE } from '../routes';
 
 const StyledSearchIcon = styled(SearchIcon)`
   padding-right: 5px;
@@ -16,32 +21,11 @@ const SearchContainer = styled.div`
   background: rgba(255, 255, 255, 0.35);
 `;
 
-class SearchBar extends Component {
-  constructor(props: Props) {
-    super();
+type Props = {
+  history: any,
+};
 
-    this.timer = null;
-    this.timeout = 1000;
-  }
-
-  timer: any;
-  timeout: number;
-
-  handleSearchChange = ({ target: { value } }: any) => {
-    clearTimeout(this.timer);
-
-    // Stop if empty
-    if (value === '') {
-      return;
-    }
-
-    this.timer = setTimeout(() => {
-      const { handleSearch } = this.props;
-
-      handleSearch(value);
-    }, this.timeout);
-  };
-
+class SearchBar extends Component<Props> {
   handleSearchEnter = ({ keyCode, target: { value } }: any) => {
     // Stop if empty
     if (value === '') {
@@ -50,11 +34,10 @@ class SearchBar extends Component {
 
     // ENTER
     if (keyCode === 13) {
-      clearTimeout(this.timer);
+      console.log(this.props);
+      const { history } = this.props;
 
-      const { handleSearch } = this.props;
-
-      handleSearch(value);
+      history.push(`${SEARCH_PAGE_ROUTE}?searchQuery=${value}`);
     }
   };
 
@@ -62,10 +45,13 @@ class SearchBar extends Component {
     return (
       <SearchContainer>
         <StyledSearchIcon />
-        <InputBase placeholder="Search…" />
+        <InputBase
+          onKeyDown={e => this.handleSearchEnter(e)}
+          placeholder="Search…"
+        />
       </SearchContainer>
     );
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

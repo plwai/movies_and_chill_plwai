@@ -1,14 +1,17 @@
 // @flow
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MovieListCard from '../movie-card';
+import QueryString from 'query-string';
+
+import MovieDetailListCard from '../movie-detailed-card';
 
 import { StyledPageSubTitle } from '../styles/page-title';
 import {
-  MovieListContainer,
-  MovieListElementContainer,
-} from '../styles/movie-list-style';
+  MovieDetailedListContainer,
+  MovieDetailedListElementContainer,
+} from '../styles/movie-detailed-list-style';
 
 type MovieStates = {
   loading: Boolean,
@@ -20,17 +23,32 @@ type MovieStates = {
 type Props = {
   fetchMovie: Function,
   movie: MovieStates,
+  location: { search: any },
 };
 
-class MovieListPage extends Component<Props> {
+class MovieDetailListPage extends Component<Props> {
+  constructor(props) {
+    super();
+
+    const {
+      location: { search },
+    } = props;
+
+    const { searchQuery } = QueryString.parse(search);
+    console.log(searchQuery);
+    this.query = searchQuery;
+  }
+
+  query: string;
+
   componentDidMount() {
-    const { fetchMovie, movie } = this.props;
+    const { fetchMovie } = this.props;
 
     document.addEventListener('scroll', this.trackScrolling);
 
-    if (movie.movie.length === 0) {
-      fetchMovie();
-    }
+    const query = this.query;
+
+    fetchMovie({ query });
   }
 
   isBottom(el: any) {
@@ -55,7 +73,9 @@ class MovieListPage extends Component<Props> {
 
       page += 1;
 
-      fetchMovie({ page });
+      const query = this.query;
+
+      fetchMovie({ query, page });
     }
   };
 
@@ -68,7 +88,13 @@ class MovieListPage extends Component<Props> {
 
     const renderResult = movies.movie.map(
       ({ id, poster_path, release_date, title, vote_average, overview }) => (
-        <MovieListCard key={id} img={poster_path} title={title} />
+        <MovieDetailListCard
+          key={id}
+          img={poster_path}
+          title={title}
+          voteAvg={vote_average}
+          overview={overview}
+        />
       )
     );
 
@@ -79,16 +105,16 @@ class MovieListPage extends Component<Props> {
     const { movie } = this.props;
 
     return (
-      <MovieListContainer>
-        <StyledPageSubTitle>Popular</StyledPageSubTitle>
-        <MovieListElementContainer>
+      <MovieDetailedListContainer>
+        <StyledPageSubTitle>Search Result</StyledPageSubTitle>
+        <MovieDetailedListElementContainer>
           {movie.error !== '' && movie.error}
           {this.renderMovies(movie)}
-        </MovieListElementContainer>
+        </MovieDetailedListElementContainer>
         <div id="scroll-check" />
         {movie.loading && <CircularProgress />}
-      </MovieListContainer>
+      </MovieDetailedListContainer>
     );
   }
 }
-export default MovieListPage;
+export default withRouter(MovieDetailListPage);

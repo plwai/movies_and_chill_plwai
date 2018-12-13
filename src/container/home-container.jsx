@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 
-import { browsePopularMovie, browseTrendingMovie } from '../action/movie';
+import { browseTrendingMovie } from '../action/movie';
 
 import Home from '../component/page/home';
 

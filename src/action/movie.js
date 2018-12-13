@@ -12,6 +12,7 @@ const requestFail = createAction(REQUEST_FAIL);
 const browseRequestSuccess = createAction(BROWSE_REQUEST_SUCCESS);
 
 type SearchQueriesType = {
+  query: string,
   page: number,
   language: string,
   includeAdult: boolean,
@@ -62,17 +63,15 @@ export const browseTrendingMovie = (
 };
 
 // Search movie based on queries
-export const searchMovies = (
-  query: string,
-  {
-    page,
-    language,
-    includeAdult,
-    region,
-    year,
-    primaryReleaseYear,
-  }: SearchQueriesType = {}
-) => (dispatch: Function) => {
+export const searchMovies = ({
+  query,
+  page,
+  language,
+  includeAdult,
+  region,
+  year,
+  primaryReleaseYear,
+}: SearchQueriesType = {}) => (dispatch: Function) => {
   const uri = `/search/movie`;
 
   const queries = {
