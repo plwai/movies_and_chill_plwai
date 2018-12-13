@@ -4,13 +4,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import MovieListCard from '../movie-card';
+import ListCard from '../list-card';
 import { MOVIE_PROFILE_PAGE_ROUTE } from '../../routes';
 import { StyledPageSubTitle } from '../styles/page-title';
-import {
-  MovieListContainer,
-  MovieListElementContainer,
-} from '../styles/movie-list-style';
+import { ListContainer, ListElementContainer } from '../styles/list-style';
 
 type MovieStates = {
   loading: Boolean,
@@ -48,7 +45,7 @@ class Home extends Component<Props> {
 
     const renderResult = movies.movie.map(
       ({ id, poster_path, release_date, title, vote_average, overview }) => (
-        <MovieListCard
+        <ListCard
           key={id}
           handleClick={() => this.handleCardClick(id)}
           img={poster_path}
@@ -64,14 +61,14 @@ class Home extends Component<Props> {
     const { trendingMovie } = this.props;
 
     return (
-      <MovieListContainer>
+      <ListContainer>
         <StyledPageSubTitle>Trending</StyledPageSubTitle>
-        <MovieListElementContainer>
+        <ListElementContainer>
           {trendingMovie.error !== '' && trendingMovie.error}
           {this.renderMovies(trendingMovie)}
-        </MovieListElementContainer>
+        </ListElementContainer>
         {trendingMovie.loading && <CircularProgress />}
-      </MovieListContainer>
+      </ListContainer>
     );
   }
 }

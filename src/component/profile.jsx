@@ -8,11 +8,8 @@ import DateRange from '@material-ui/icons/DateRange';
 import StarRate from '@material-ui/icons/StarRate';
 
 import { StyledPaperSubTitle } from './styles/page-title';
-import MovieListCard from './movie-card';
-import {
-  MovieListContainer,
-  MovieListElementContainer,
-} from './styles/movie-list-style';
+import ListCard from './list-card';
+import { ListContainer, ListElementContainer } from './styles/list-style';
 import {
   StyledPaper,
   DetailContainer,
@@ -99,18 +96,18 @@ const Profile = ({
       </DetailContainer>
       <StyledPaperSubTitle>{creditTitle}</StyledPaperSubTitle>
       <CastContainer>
-        <MovieListContainer>
-          <MovieListElementContainer>
+        <ListContainer>
+          <ListElementContainer>
             {filteredCast.map(({ id, img_path, name }) => (
-              <MovieListCard
+              <ListCard
                 key={id}
                 handleClick={() => handleCardClick(id)}
                 img={img_path}
                 title={name}
               />
             ))}
-          </MovieListElementContainer>
-        </MovieListContainer>
+          </ListElementContainer>
+        </ListContainer>
       </CastContainer>
       {youtubeVideos.length !== 0 && (
         <StyledPaperSubTitle>Trailer</StyledPaperSubTitle>

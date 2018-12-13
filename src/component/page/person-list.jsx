@@ -5,31 +5,32 @@ import { withRouter } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListCard from '../list-card';
 
-import { MOVIE_PROFILE_PAGE_ROUTE } from '../../routes';
+import { PEOPLE_PROFILE_PAGE_ROUTE } from '../../routes';
 import { StyledPageSubTitle } from '../styles/page-title';
 import { ListContainer, ListElementContainer } from '../styles/list-style';
 
-type MovieStates = {
-  loading: Boolean,
-  movie: Array<any>,
-  page: number,
-  error: string,
-};
-
 type Props = {
-  fetchMovie: Function,
-  movie: MovieStates,
+  person: {
+    results: any,
+    page: number,
+    loading: boolean,
+    error: string,
+  },
   history: any,
+  fetchPeople: Function,
 };
 
 class MovieListPage extends Component<Props> {
   componentDidMount() {
-    const { fetchMovie, movie } = this.props;
+    const {
+      fetchPeople,
+      person: { results },
+    } = this.props;
 
     document.addEventListener('scroll', this.trackScrolling);
 
-    if (movie.movie.length === 0) {
-      fetchMovie();
+    if (results.length === 0) {
+      fetchPeople();
     }
   }
 
@@ -45,8 +46,8 @@ class MovieListPage extends Component<Props> {
     const wrappedElement = document.getElementById('scroll-check');
     if (this.isBottom(wrappedElement)) {
       let {
-        fetchMovie,
-        movie: { loading, page },
+        fetchPeople,
+        person: { loading, page },
       } = this.props;
 
       if (loading) {
@@ -55,49 +56,51 @@ class MovieListPage extends Component<Props> {
 
       page += 1;
 
-      fetchMovie({ page });
+      fetchPeople({ page });
     }
   };
 
   handleCardClick(id: number) {
     const { history } = this.props;
 
-    history.push(`${MOVIE_PROFILE_PAGE_ROUTE}?movieId=${id}`);
+    history.push(`${PEOPLE_PROFILE_PAGE_ROUTE}?personId=${id}`);
   }
 
-  renderMovies(movies: any) {
-    const { movie } = movies;
+  renderPeople() {
+    const {
+      person: { results },
+    } = this.props;
 
-    if (movie === undefined) {
+    if (results.length === 0) {
       return;
     }
 
-    const renderResult = movies.movie.map(
-      ({ id, poster_path, release_date, title, vote_average, overview }) => (
-        <ListCard
-          key={id}
-          handleClick={() => this.handleCardClick(id)}
-          img={poster_path}
-          title={title}
-        />
-      )
-    );
+    const renderResult = results.map(({ id, profile_path, name }) => (
+      <ListCard
+        key={id}
+        handleClick={() => this.handleCardClick(id)}
+        img={profile_path}
+        title={name}
+      />
+    ));
 
     return renderResult;
   }
 
   render() {
-    const { movie } = this.props;
+    const {
+      person: { error, loading },
+    } = this.props;
 
     return (
       <ListContainer>
-        <StyledPageSubTitle>Popular</StyledPageSubTitle>
+        <StyledPageSubTitle>Person</StyledPageSubTitle>
         <ListElementContainer>
-          {movie.error !== '' && movie.error}
-          {this.renderMovies(movie)}
+          {error !== '' && error}
+          {this.renderPeople()}
         </ListElementContainer>
         <div id="scroll-check" />
-        {movie.loading && <CircularProgress />}
+        {loading && <CircularProgress />}
       </ListContainer>
     );
   }

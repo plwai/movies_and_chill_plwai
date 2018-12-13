@@ -10,6 +10,7 @@ import Header from './component/header';
 import Home from './container/home-container';
 import PopularPage from './container/popular-container';
 import SearchPage from './container/search-container';
+import PeoplePage from './container/people-container';
 import MovieProfilePage from './container/movie-profile-container.jsx';
 import PeopleProfilePage from './container/people-profile-container.jsx';
 
@@ -19,6 +20,7 @@ import {
   SEARCH_PAGE_ROUTE,
   MOVIE_PROFILE_PAGE_ROUTE,
   PEOPLE_PROFILE_PAGE_ROUTE,
+  PEOPLE_PAGE_ROUTE,
 } from './routes';
 
 const AppContainer = styled.div``;
@@ -57,6 +59,11 @@ class App extends Component {
                   exact
                   path={PEOPLE_PROFILE_PAGE_ROUTE}
                   render={() => <PeopleProfilePage />}
+                />
+                <Route
+                  exact
+                  path={PEOPLE_PAGE_ROUTE}
+                  render={() => <PeoplePage />}
                 />
               </Switch>
             </BodyContainer>

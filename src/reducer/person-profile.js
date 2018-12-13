@@ -1,15 +1,15 @@
 // @flow
 
 import {
-  REQUEST_PERSON_LIST_STARTED,
-  REQUEST_PERSON_LIST_FAIL,
-  GET_PERSON_LIST_REQUEST_SUCCESS,
-} from '../action/person';
+  REQUEST_PERSON_STARTED,
+  REQUEST_PERSON_FAIL,
+  GET_PERSON_DETAIL_REQUEST_SUCCESS,
+} from '../action/person-profile';
 
 const initialState = {
   loading: false,
-  results: [],
-  page: 1,
+  personResult: {},
+  castInMovie: { cast: [], crew: [] },
 };
 
 const personReducer = (
@@ -17,24 +17,24 @@ const personReducer = (
   action: { type: string, payload: any }
 ) => {
   switch (action.type) {
-    case REQUEST_PERSON_LIST_STARTED:
+    case REQUEST_PERSON_STARTED:
       return Object.assign({}, state, {
         loading: true,
       });
 
-    case REQUEST_PERSON_LIST_FAIL: {
+    case GET_PERSON_DETAIL_REQUEST_SUCCESS: {
       const {
-        payload: { results, page },
+        payload: { personResult, castInMovie },
       } = action;
 
       return Object.assign({}, state, {
         loading: false,
-        results: [...state.results, ...results],
-        page,
+        personResult,
+        castInMovie,
       });
     }
 
-    case GET_PERSON_LIST_REQUEST_SUCCESS: {
+    case REQUEST_PERSON_FAIL: {
       return Object.assign({}, state, {
         loading: false,
       });

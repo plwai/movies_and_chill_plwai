@@ -2,12 +2,12 @@
 
 import { connect } from 'react-redux';
 
-import { getCastDetails } from '../action/person';
+import { getCastDetails } from '../action/person-profile';
 
 import PersonProfilePage from '../component/page/person-profile';
 
 const mapStateToProps = state => ({
-  personProfile: state.person,
+  personProfile: state.personProfile,
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({

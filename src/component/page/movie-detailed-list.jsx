@@ -83,7 +83,6 @@ class MovieDetailListPage extends Component<Props> {
 
   handleCardClick(id: number) {
     const { history } = this.props;
-    console.log(id);
 
     history.push(`${MOVIE_PROFILE_PAGE_ROUTE}?movieId=${id}`);
   }
