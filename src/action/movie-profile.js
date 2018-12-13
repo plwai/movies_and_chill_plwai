@@ -19,12 +19,16 @@ export const getMovieDetails = (id: number) => async (dispatch: Function) => {
 
   const movieDetailUri = `/movie/${id}`;
   const creditsUri = `/movie/${id}/credits`;
+  const videosUri = `/movie/${id}/videos`;
 
   try {
     const browseResult = await http.GET(movieDetailUri);
     const creditResult = await http.GET(creditsUri);
+    const videosResult = await http.GET(videosUri);
 
-    dispatch(browseDetailRequestSuccess({ browseResult, creditResult }));
+    dispatch(
+      browseDetailRequestSuccess({ browseResult, creditResult, videosResult })
+    );
   } catch (err) {
     dispatch(requestProfileFail(err));
   }

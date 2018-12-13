@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   loading: false,
+  id: 0,
   movieDetail: {},
   cast: [],
 };
@@ -26,13 +27,18 @@ const movieReducer = (
       const {
         payload: {
           browseResult: {
+            id,
             title,
             overview,
             runtime,
             release_date,
             production_companies,
+            poster_path,
+            vote_average,
+            video,
           },
           creditResult: { cast },
+          videosResult: { results },
         },
       } = action;
 
@@ -42,12 +48,17 @@ const movieReducer = (
         runtime,
         release_date,
         production_companies,
+        poster_path,
+        vote_average,
+        video,
       };
 
       return Object.assign({}, state, {
         loading: false,
+        id,
         movieDetail,
         cast,
+        videos: results,
       });
     }
 

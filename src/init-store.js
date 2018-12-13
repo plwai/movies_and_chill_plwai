@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import MovieReducer from './reducer/movie';
 import MovieProfile from './reducer/movie-profile';
 import PersonReducer from './reducer/person';
+import PersonProfileReducer from './reducer/person-profile';
 
 const initialState = {};
 const enhancers = [];
@@ -28,6 +29,7 @@ const store = createStore(
   combineReducers({
     movie: MovieReducer,
     person: PersonReducer,
+    personProfile: PersonProfileReducer,
     movieProfile: MovieProfile,
   }),
   initialState,
