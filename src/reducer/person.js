@@ -9,7 +9,7 @@ import {
 const initialState = {
   loading: false,
   personResult: {},
-  castInMovie: [],
+  castInMovie: { cast: [], crew: [] },
 };
 
 const personReducer = (

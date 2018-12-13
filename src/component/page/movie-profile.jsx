@@ -2,31 +2,12 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
-import AccessTime from '@material-ui/icons/AccessTime';
-import DateRange from '@material-ui/icons/DateRange';
-import StarRate from '@material-ui/icons/StarRate';
 import QueryString from 'query-string';
 
-import { StyledPageSubTitle, StyledPaperSubTitle } from '../styles/page-title';
-import MovieListCard from '../movie-card';
-import {
-  MovieListContainer,
-  MovieListElementContainer,
-} from '../styles/movie-list-style';
-import {
-  MovieProfileContainer,
-  StyledPaper,
-  MovieDetailContainer,
-  MovieDetailInfoContainer,
-  CastContainer,
-  TrailerContainer,
-  MovieDetailShortInfoBar,
-  MovieDetailShortInfo,
-  StyledIFrame,
-  NoMarginTypography,
-} from '../styles/movie-profile.style';
+import { PEOPLE_PROFILE_PAGE_ROUTE } from '../../routes';
+import { StyledPageSubTitle } from '../styles/page-title';
+import Profile from '../profile';
+import { MovieProfileContainer } from '../styles/movie-profile-style';
 
 type MovieDetail = {
   title: string,
@@ -46,6 +27,7 @@ type Props = {
   },
   fetchMovieDetail: Function,
   location: { search: any },
+  history: any,
 };
 
 class MovieProfilePage extends Component<Props> {
@@ -69,6 +51,12 @@ class MovieProfilePage extends Component<Props> {
     fetchMovieDetail(this.movieId);
   }
 
+  handleCardClick(id) {
+    const { history } = this.props;
+
+    history.push(`${PEOPLE_PROFILE_PAGE_ROUTE}?personId=${id}`);
+  }
+
   renderProfile() {
     const {
       movieProfile: {
@@ -86,91 +74,27 @@ class MovieProfilePage extends Component<Props> {
       },
     } = this.props;
 
-    if (loading || cast.length === 0) {
-      return <CircularProgress />;
-    }
+    const modifiedCast = cast.map(element => {
+      element.img_path = element.profile_path;
 
-    let filteredCast = [];
-
-    // Limit 6 cast
-    for (let i = 0; i < 6; i++) {
-      filteredCast.push(cast[i]);
-    }
-
-    // Find youtube video
-    const youtubeVideos = videos.filter(({ site }) => site === 'YouTube');
+      return element;
+    });
 
     return (
-      <StyledPaper elevation={1}>
-        <MovieDetailContainer>
-          <img
-            src={`http://image.tmdb.org/t/p/w300${poster_path}`}
-            alt="movie poster"
-          />
-          <MovieDetailInfoContainer>
-            <StyledPaperSubTitle>{`${title}`}</StyledPaperSubTitle>
-            <MovieDetailShortInfoBar>
-              <MovieDetailShortInfo>
-                <DateRange />
-                <NoMarginTypography gutterBottom variant="h6" component="h6">
-                  {release_date}
-                </NoMarginTypography>
-              </MovieDetailShortInfo>
-              <MovieDetailShortInfo>
-                <StarRate />
-                <NoMarginTypography gutterBottom variant="h6" component="h6">
-                  {`${vote_average}/10.0`}
-                </NoMarginTypography>
-              </MovieDetailShortInfo>
-              {runtime !== null && (
-                <MovieDetailShortInfo>
-                  <AccessTime />
-                  <NoMarginTypography gutterBottom variant="h6" component="h6">
-                    {`${runtime} minutes`}
-                  </NoMarginTypography>
-                </MovieDetailShortInfo>
-              )}
-            </MovieDetailShortInfoBar>
-            <Typography gutterBottom variant="h6" component="h6">
-              {`Overview`}
-            </Typography>
-            <Typography gutterBottom variant="body2" component="h6">
-              {overview}
-            </Typography>
-          </MovieDetailInfoContainer>
-        </MovieDetailContainer>
-        <StyledPaperSubTitle>Cast</StyledPaperSubTitle>
-        <CastContainer>
-          <MovieListContainer>
-            <MovieListElementContainer>
-              {filteredCast.map(({ id, profile_path, name }) => (
-                <MovieListCard
-                  key={id}
-                  handleClick={() => this.handleCardClick(id)}
-                  img={profile_path}
-                  title={name}
-                />
-              ))}
-            </MovieListElementContainer>
-          </MovieListContainer>
-        </CastContainer>
-        {youtubeVideos.length !== 0 && (
-          <StyledPaperSubTitle>Trailer</StyledPaperSubTitle>
-        )}
-        {youtubeVideos.length !== 0 && (
-          <TrailerContainer>
-            {youtubeVideos.map(({ key, name }) => (
-              <StyledIFrame
-                title={name}
-                key={key}
-                width="420"
-                height="315"
-                src={`https://www.youtube.com/embed/${key}`}
-              />
-            ))}
-          </TrailerContainer>
-        )}
-      </StyledPaper>
+      <Profile
+        title={title}
+        poster_path={poster_path}
+        date={release_date}
+        rating={vote_average}
+        overview={overview}
+        overview_title="Overview"
+        runtime={runtime}
+        credit={modifiedCast}
+        creditTitle="Cast"
+        videos={videos}
+        loading={loading}
+        handleCardClick={id => this.handleCardClick(id)}
+      />
     );
   }
 

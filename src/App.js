@@ -11,12 +11,14 @@ import Home from './container/home-container';
 import PopularPage from './container/popular-container';
 import SearchPage from './container/search-container';
 import MovieProfilePage from './container/movie-profile-container.jsx';
+import PeopleProfilePage from './container/people-profile-container.jsx';
 
 import {
   HOME_PAGE_ROUTE,
   POPULAR_PAGE_ROUTE,
   SEARCH_PAGE_ROUTE,
   MOVIE_PROFILE_PAGE_ROUTE,
+  PEOPLE_PROFILE_PAGE_ROUTE,
 } from './routes';
 
 const AppContainer = styled.div``;
@@ -50,6 +52,11 @@ class App extends Component {
                   exact
                   path={MOVIE_PROFILE_PAGE_ROUTE}
                   render={() => <MovieProfilePage />}
+                />
+                <Route
+                  exact
+                  path={PEOPLE_PROFILE_PAGE_ROUTE}
+                  render={() => <PeopleProfilePage />}
                 />
               </Switch>
             </BodyContainer>
