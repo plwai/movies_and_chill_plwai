@@ -18,9 +18,16 @@ import {
   RatingContainer,
 } from './styles/movie-detailed-list-style';
 
-const MovieDetailListCard = ({ img, title, voteAvg, overview }: any) => (
+const MovieDetailListCard = ({
+  img,
+  title,
+  movieId,
+  handleClick,
+  voteAvg,
+  overview,
+}: any) => (
   <StyledMovieDetailedListCard>
-    <StyledMovieDetailedListCardActionArea>
+    <StyledMovieDetailedListCardActionArea onClick={handleClick}>
       {img === null ? (
         <StyledWarningIcon />
       ) : (
@@ -45,14 +52,14 @@ const MovieDetailListCard = ({ img, title, voteAvg, overview }: any) => (
       </StyledTopContainer>
 
       <StyledOverviewContainer>
-        <Typography gutterBottom variant="body2" component="body2">
+        <Typography gutterBottom variant="body2" component="h6">
           {overview}
         </Typography>
       </StyledOverviewContainer>
       <StyledCardActionContainer>
         <span />
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={handleClick}>
             Learn More
           </Button>
         </CardActions>

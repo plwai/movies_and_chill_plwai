@@ -10,9 +10,9 @@ import {
   StyledMovieListCardActionArea,
 } from './styles/movie-list-style';
 
-const MovieListCard = ({ img, title }: any) => (
+const MovieListCard = ({ img, handleClick, title }: any) => (
   <StyledMovieListCard>
-    <StyledMovieListCardActionArea>
+    <StyledMovieListCardActionArea onClick={handleClick}>
       <StyledMovieListCardMedia
         image={`http://image.tmdb.org/t/p/w185${img}`}
         title={title}

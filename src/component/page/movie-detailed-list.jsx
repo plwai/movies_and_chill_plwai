@@ -7,6 +7,7 @@ import QueryString from 'query-string';
 
 import MovieDetailListCard from '../movie-detailed-card';
 
+import { MOVIE_PROFILE_PAGE_ROUTE } from '../../routes';
 import { StyledPageSubTitle } from '../styles/page-title';
 import {
   MovieDetailedListContainer,
@@ -23,6 +24,7 @@ type MovieStates = {
 type Props = {
   fetchMovie: Function,
   movie: MovieStates,
+  history: any,
   location: { search: any },
 };
 
@@ -35,7 +37,7 @@ class MovieDetailListPage extends Component<Props> {
     } = props;
 
     const { searchQuery } = QueryString.parse(search);
-    console.log(searchQuery);
+
     this.query = searchQuery;
   }
 
@@ -79,6 +81,13 @@ class MovieDetailListPage extends Component<Props> {
     }
   };
 
+  handleCardClick(id: number) {
+    const { history } = this.props;
+    console.log(id);
+
+    history.push(`${MOVIE_PROFILE_PAGE_ROUTE}?movieId=${id}`);
+  }
+
   renderMovies(movies: any) {
     const { movie } = movies;
 
@@ -90,6 +99,7 @@ class MovieDetailListPage extends Component<Props> {
       ({ id, poster_path, release_date, title, vote_average, overview }) => (
         <MovieDetailListCard
           key={id}
+          handleClick={() => this.handleCardClick(id)}
           img={poster_path}
           title={title}
           voteAvg={vote_average}

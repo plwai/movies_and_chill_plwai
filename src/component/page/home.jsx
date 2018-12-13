@@ -1,9 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MovieListCard from '../movie-card';
+import { MOVIE_PROFILE_PAGE_ROUTE } from '../../routes';
 import { StyledPageSubTitle } from '../styles/page-title';
 import {
   MovieListContainer,
@@ -18,7 +20,7 @@ type MovieStates = {
 
 type Props = {
   fetchTrending: Function,
-
+  history: any,
   trendingMovie: MovieStates,
 };
 
@@ -31,6 +33,12 @@ class Home extends Component<Props> {
     }
   }
 
+  handleCardClick(id: number) {
+    const { history } = this.props;
+
+    history.push(`${MOVIE_PROFILE_PAGE_ROUTE}?movieId=${id}`);
+  }
+
   renderMovies(movies: any) {
     const { movie } = movies;
 
@@ -40,7 +48,12 @@ class Home extends Component<Props> {
 
     const renderResult = movies.movie.map(
       ({ id, poster_path, release_date, title, vote_average, overview }) => (
-        <MovieListCard key={id} img={poster_path} title={title} />
+        <MovieListCard
+          key={id}
+          handleClick={() => this.handleCardClick(id)}
+          img={poster_path}
+          title={title}
+        />
       )
     );
 
@@ -62,4 +75,4 @@ class Home extends Component<Props> {
     );
   }
 }
-export default Home;
+export default withRouter(Home);

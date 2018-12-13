@@ -34,7 +34,6 @@ class SearchBar extends Component<Props> {
 
     // ENTER
     if (keyCode === 13) {
-      console.log(this.props);
       const { history } = this.props;
 
       history.push(`${SEARCH_PAGE_ROUTE}?searchQuery=${value}`);

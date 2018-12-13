@@ -4,11 +4,7 @@ import React from 'react';
 import { StyledNavLink } from './styles/nav-link';
 import { StyledNavContainer, StyledNavLinkContainer } from './styles/nav-style';
 
-import {
-  HOME_PAGE_ROUTE,
-  POPULAR_PAGE_ROUTE,
-  PEOPLE_PAGE_ROUTE,
-} from '../routes';
+import { HOME_PAGE_ROUTE, POPULAR_PAGE_ROUTE } from '../routes';
 
 const Nav = () => (
   <nav>
@@ -16,7 +12,6 @@ const Nav = () => (
       {[
         { route: HOME_PAGE_ROUTE, label: 'Home' },
         { route: POPULAR_PAGE_ROUTE, label: 'Popular' },
-        { route: PEOPLE_PAGE_ROUTE, label: 'People' },
       ].map(link => (
         <StyledNavLinkContainer key={link.route}>
           <StyledNavLink
