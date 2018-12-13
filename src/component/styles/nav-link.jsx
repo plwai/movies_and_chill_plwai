@@ -16,9 +16,9 @@ export const NoStyleNavLink = styled(NavLink)`
 
 export const StyledNavLink = styled(NavLink)`
   text-decoration: none;
+  color: inherit;
 
   &:visited {
-    color: inherit;
     text-decoration: none;
   }
 `;
