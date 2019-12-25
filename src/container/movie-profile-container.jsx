@@ -16,7 +16,4 @@ const mapDispatchToProps = (dispatch: Function) => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MovieProfilePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieProfilePage);
